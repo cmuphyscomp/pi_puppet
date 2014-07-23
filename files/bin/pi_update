@@ -58,4 +58,4 @@ if __name__ == "__main__":
     if args.all or args.course:
         assert_root()
         if verbose: print "Updating course files for Physical Computing."
-        os.system('cd /opt/pi_puppet/course-demos; git pull')
+        os.system('cd /opt/cmuphyscomp/course-demos; git pull')
