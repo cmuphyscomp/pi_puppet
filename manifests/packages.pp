@@ -20,6 +20,7 @@ class pi_puppet::packages {
    "puppet-el",
    "arduino",
    "puredata",
+   "pd-comport",
    "pd-zexy",
    "pd-cyclone",
    "pd-list-abs",
