@@ -18,6 +18,7 @@ class pi_puppet::packages {
    "python-pyode",
    "puppet",
    "puppet-el",
+   "arduino",
    "puredata",
    "pd-zexy",
    "pd-cyclone",
