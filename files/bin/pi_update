@@ -42,13 +42,13 @@ if __name__ == "__main__":
         assert_root()
         if verbose: print "Updating configuration files from github."
         os.system('cd /etc/puppet/modules/pi_puppet; git pull')
-        os.system("""puppet apply -e 'include pi_puppet::scripts\ninclude pi_puppet::misc'""")
+        os.system("""puppet apply -e 'include pi_puppet::scripts'""")
 
     if args.all or args.packages:
         assert_root()
         if verbose: print "Updating Debian packages."
         os.system("""apt-get update""")
-        os.system("""puppet apply -e 'include pi_puppet::packages'""")
+        os.system("""puppet apply -e 'include pi_puppet::packages\ninclude pi_puppet::misc'""")
 
     if args.all or args.user:
         assert_root()

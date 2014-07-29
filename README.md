@@ -48,6 +48,7 @@ For hints, the quick start guide listed above may be helpful.
 Make sure that puppet is installed:
 
     $ sudo apt-get update
+    $ sudo apt-get upgrade
     $ sudo apt-get install puppet
 
 Clone this package from github into a new folder:
