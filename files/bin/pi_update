@@ -58,4 +58,7 @@ if __name__ == "__main__":
     if args.all or args.course:
         assert_root()
         if verbose: print "Updating course files for Physical Computing."
-        os.system('cd /opt/cmuphyscomp/course-demos; git pull')
+        if os.path.isdir("/opt/cmuphyscomp/course-demos"):
+            os.system('cd /opt/cmuphyscomp/course-demos; git pull')
+        else:
+            print "/opt/cmuphyscomp/course-demos does not exist; is the courseware bootstrapped?"
