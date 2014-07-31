@@ -15,7 +15,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Update a Raspbian Linux installation for Physical Computing.')
     parser.add_argument('--quiet',    action='store_true', help='Suppress status output while running.')
 
-    parser.add_argument('--network',  action='store_true', help='Update network configuration.')
     parser.add_argument('--github',   action='store_true', help='Update config scripts from github.')
     parser.add_argument('--packages', action='store_true', help='Update system Debian packages.')
     parser.add_argument('--user',     action='store_true', help='Update user account files.')
@@ -33,22 +32,18 @@ if __name__ == "__main__":
         if verbose: print "No update options specified, defaulting to full update."
         args.all = True
 
-    if args.all or args.network:
-        assert_root()
-        if verbose: print "Updating network configuration."
-        os.system("""puppet apply -e 'include pi_puppet::network'""")
-
     if args.all or args.github:
         assert_root()
         if verbose: print "Updating configuration files from github."
         os.system('cd /etc/puppet/modules/pi_puppet; git pull')
+
+        # note: the following line may update this script itself, possibly requiring a second iteration
         os.system("""puppet apply -e 'include pi_puppet::scripts'""")
 
     if args.all or args.packages:
         assert_root()
         if verbose: print "Updating Debian packages."
-        os.system("""apt-get update""")
-        os.system("""puppet apply -e 'include pi_puppet::packages\ninclude pi_puppet::misc'""")
+        os.system("""puppet apply -e 'include pi_puppet::packages\ninclude pi_puppet::pkgconfig'""")
 
     if args.all or args.user:
         assert_root()
@@ -58,7 +53,11 @@ if __name__ == "__main__":
     if args.all or args.course:
         assert_root()
         if verbose: print "Updating course files for Physical Computing."
+
         if os.path.isdir("/opt/cmuphyscomp/course-demos"):
-            os.system('cd /opt/cmuphyscomp/course-demos; git pull')
+            print "Warning: obsolete /opt/cmuphyscomp/course-demos still present, should be removed."
+
+        if os.path.isdir("/opt/cmuphyscomp/physcomp-examples"):
+            os.system('cd /opt/cmuphyscomp/physcomp-examples; git pull')
         else:
-            print "/opt/cmuphyscomp/course-demos does not exist; is the courseware bootstrapped?"
+            print "/opt/cmuphyscomp/physcomp-examples does not exist; is the courseware bootstrapped?"

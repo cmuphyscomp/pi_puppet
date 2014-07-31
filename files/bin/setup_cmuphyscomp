@@ -1,0 +1,106 @@
+#!/bin/bash
+
+# This is a rarely-used and fragile script to create from scratch the bulk of
+# the Raspberry Pi courseware tree for the Intro to Physical Computing course in
+# IDeATe at Carnegie Mellon University.
+
+# The courseware is stored under /opt/cmuphyscomp.  The puppet system creates
+# symbolic links to these files in various places around the system.
+
+# The courseware includes several repository checkouts and a few local
+# compilations to allow the possibility of updating parts of it in place.
+
+# This script has minimal error-checking and should be run with caution.  It has
+# some limited capacity to selectively rebuild missing subtrees in order to
+# allow re-running after fixing an error.
+
+################################################################
+# Check whether we are root, in order to get correct permissions locally.
+if [ `whoami` != "root" ];
+then
+    echo "This must be run as root in order to create files with correct permissions."
+    exit 0;
+fi
+
+################################################################
+if [ ! -e "/opt/cmuphyscomp" ];
+then
+    echo "Creating folders in /opt/cmuphyscomp."
+    mkdir /opt/cmuphyscomp
+    mkdir /opt/cmuphyscomp/lib
+    mkdir /opt/cmuphyscomp/lib/pd-externals
+    mkdir /opt/cmuphyscomp/src
+fi
+
+################################################################
+if [ ! -e "/opt/cmuphyscomp/src/pd-svn" ];
+then
+    echo "Checking out and building Pd externals."
+    cd /opt/cmuphyscomp/src
+    svn checkout -N svn://svn.code.sf.net/p/pure-data/svn/trunk pd-svn
+    cd pd-svn
+    svn update -N externals
+    svn update -N packages
+    svn update -N pd
+    cd pd
+    svn update -N src
+    cd ..
+    cd externals
+    svn up mrpeach
+    cd /opt/cmuphyscomp/src/pd-svn/externals
+    make mrpeach
+    mkdir /opt/cmuphyscomp/lib/pd-externals/mrpeach
+    install -p mrpeach/*/*.pd_linux mrpeach/*/*.pd /opt/cmuphyscomp/lib/pd-externals/mrpeach
+fi
+
+################################################################
+if [ ! -e "/opt/cmuphyscomp/src/OSC" ];
+then
+    echo "Cloning OSC libraries from github."
+    cd /opt/cmuphyscomp/src
+    git clone https://github.com/CNMAT/OSC
+fi
+
+################################################################
+if [ -e "/opt/cmuphyscomp/course-demos" ];
+then
+    echo "Warning: obsolete /opt/cmuphyscomp/course-demos folder found, this should be removed."
+fi
+
+################################################################
+if [ ! -e "/opt/cmuphyscomp/physcomp-examples" ];
+then
+    echo "Cloning course materials from github."
+    cd /opt/cmuphyscomp
+    git clone https://github.com/cmuphyscomp/physcomp-examples.git
+fi
+
+################################################################
+if [ ! -e "/opt/cmuphyscomp/src/wiringPi" ];
+then
+    echo "Cloning wiringPi from git.drogon.net, building, and installing."
+    cd /opt/cmuphyscomp/src
+    git clone git://git.drogon.net/wiringPi
+    cd wiringPi
+    ./build
+    echo "Note: wiringPi installs files into /usr/local"
+fi
+
+################################################################
+if [ ! -e "/opt/cmuphyscomp/src/Pd-wiringPi" ];
+then
+    echo "Note: rpi-gpio still needs to be manually installed from http://nyu-waverlylabs.org/rpi-gpio/"
+    echo "It should be complied in /opt/cmuphyscomp/src/Pd-wiringPi"
+fi
+
+################################################################
+if [ ! -e "/opt/cmuphyscomp/lib/ml-lib" ];
+then
+    cd /tmp
+    wget https://github.com/cmuartfab/ml-lib/releases/download/0.15.1/ml-0.15.1-alpha.zip
+    unzip ml-0.15.1-alpha.zip
+
+    # Note: this drops the version number in favor of using a stable path name.
+    mv ml-0.15.1-alpha /opt/cmuphyscomp/lib/ml-lib
+fi
+################################################################

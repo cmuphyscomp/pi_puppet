@@ -1,5 +1,7 @@
-class pi_puppet::misc {
-  
+# Configure system-level packages.
+
+class pi_puppet::pkgconfig {
+
   file { "/etc/motd":
     ensure => present,
     mode   => 0644,
@@ -16,13 +18,18 @@ class pi_puppet::misc {
     source => "puppet:///modules/pi_puppet/etc/default/locale",
   }
 
+  package { 'samba':
+    ensure => present,
+    before => [ File['/etc/samba/smb.conf'], File['/var/lib/samba/passdb.tdb'] ],
+  }
+
   file { "/etc/samba/smb.conf":
     ensure => present,
     mode   => 0644,
     owner  => 'root',
     group  => 'root',
     source => "puppet:///modules/pi_puppet/etc/samba/smb.conf",
-  }
+    }
 
   # The following samba password database includes an entry for the default 'pi'
   # user created as follows:
@@ -33,6 +40,11 @@ class pi_puppet::misc {
     owner  => 'root',
     group  => 'root',
     source => "puppet:///modules/pi_puppet/var/lib/samba/passdb.tdb",
+  }
+
+  package { 'minicom':
+    ensure => present,
+    before => File['/etc/minicom/minirc.dfl'],
   }
 
   file { "/etc/minicom/minirc.dfl":
@@ -52,12 +64,13 @@ class pi_puppet::misc {
   }
 
   # global folder to hold course package materials in one place
-  file { "/opt/cmuphyscomp":
-    ensure => 'directory',
-    mode   => 0755,
-    owner  => root,
-    group  => root,
-  }
+  # this is now created manually by the bootstrap_opt_cmuphyscomp script
+  # file { "/opt/cmuphyscomp":
+  #   ensure => 'directory',
+  #   mode   => 0755,
+  #   owner  => root,
+  #   group  => root,
+  # }
 
   # locally compiled Pure Data library, kept in the course package
   file { "/usr/local/lib/pd-externals/mrpeach":
@@ -66,5 +79,4 @@ class pi_puppet::misc {
     owner  => root,
     group  => root,
   }
-
 }

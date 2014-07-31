@@ -46,7 +46,7 @@ class pi_puppet::user {
   # Pure Data library provided with the course
   file { "/home/pi/pd-externals/physcomp":
     ensure => 'link',
-    target => '/opt/cmuphyscomp/course-demos/lib/physcomp',
+    target => '/opt/cmuphyscomp/physcomp-examples/support/Pd-library/physcomp',
     owner  => pi,
     group  => pi,
   }
@@ -54,16 +54,43 @@ class pi_puppet::user {
   # Pure Data examples provided with the course
   file { "/home/pi/pd-externals/demos":
     ensure => 'link',
-    target => '/opt/cmuphyscomp/course-demos/demos',
+    target => '/opt/cmuphyscomp/physcomp-examples/support/Pd-demos',
     owner  => pi,
     group  => pi,
   }
 
-  file { "/home/pi/pd-externals/doc":
+  # Pure Data machine learning library provided with the course
+  file { "/home/pi/pd-externals/ml-lib":
     ensure => 'link',
-    target => '/opt/cmuphyscomp/course-demos/doc',
+    target => '/opt/cmuphyscomp/lib/ml-lib/Linux/armv6',
     owner  => pi,
     group  => pi,
+  }
+
+  file { "/home/pi/pd-externals/reference":
+    ensure => 'link',
+    target => '/opt/cmuphyscomp/physcomp-examples/reference',
+    owner  => pi,
+    group  => pi,
+  }
+
+  file { "/home/pi/pd-externals/wiringPi_gpio-help.pd":
+    ensure => 'link',
+    target => '/opt/cmuphyscomp/src/Pd-wiringPi/wiringPi_gpio/wiringPi_gpio-help.pd',
+    owner  => pi,
+    group  => pi,
+  }
+
+  file { "/home/pi/pd-externals/wiringPi_gpio.pd_linux":
+    ensure => 'link',
+    target => '/opt/cmuphyscomp/src/Pd-wiringPi/wiringPi_gpio/wiringPi_gpio.l_arm',
+    owner  => pi,
+    group  => pi,
+  }
+
+  # link now moot, this can be removed after all systems update
+  file { "/home/pi/pd-externals/doc":
+    ensure => 'absent',
   }
 
   ################################################################
@@ -87,7 +114,7 @@ class pi_puppet::user {
   # Arduino sketches provided with the course
   file { "/home/pi/sketchbook/cmuphyscomp":
     ensure => 'link',
-    target => '/opt/cmuphyscomp/course-demos/Arduino/',
+    target => '/opt/cmuphyscomp/physcomp-examples/support/Arduino/',
     owner  => pi,
     group  => pi,
   }

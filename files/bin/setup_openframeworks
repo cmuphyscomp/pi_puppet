@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# This is a rarely-used and fragile script to rebuild openFrameworks
+# for Raspberry Pi for the Intro to Physical Computing course in
+# IDeATe at Carnegie Mellon University.
+
+# This script has minimal error-checking and should be run with caution.  It has
+# some limited capacity to selectively rebuild missing subtrees in order to
+# allow re-running after fixing an error.
+
+################################################################
+# Check whether we are root, in order to get correct permissions locally.
+if [ `whoami` != "root" ];
+then
+    echo "This must be run as root in order to create files with correct permissions."
+    exit 0;
+fi
+
+################################################################
+# see http://openframeworks.cc/download/ 
+# see http://openframeworks.cc/setup/raspberrypi/
+
+# the following can take a long time
+
+if [ ! -e "/opt/openFrameworks" ];
+then
+    echo "Fetching and unpacking openFrameworks for Raspberry Pi."
+    cd /tmp
+    wget http://www.openframeworks.cc/versions/v0.8.3/of_v0.8.3_linuxarmv6l_release.tar.gz    
+    cd /opt
+    mkdir openFrameworks
+    tar vxfz /tmp/of_v0.8.3_linuxarmv6l_release.tar.gz -C openFrameworks --strip-components 1
+fi
+
+
+if [ ! -e "/opt/openFrameworks/.build-timestamp" ];
+then
+    echo "Compiling openFrameworks.  This can take an hour on the Raspberry Pi."
+    cd /opt/openFrameworks/scripts/linux/debian_armv6l
+    make Release -C /opt/openFrameworks/libs/openFrameworksCompiled/project
+    touch /opt/openFrameworks/.build-timestamp
+fi
+
+################################################################
