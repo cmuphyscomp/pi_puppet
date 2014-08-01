@@ -90,7 +90,7 @@ fi
 if [ ! -e "/opt/cmuphyscomp/src/Pd-wiringPi" ];
 then
     echo "Note: rpi-gpio still needs to be manually installed from http://nyu-waverlylabs.org/rpi-gpio/"
-    echo "It should be complied in /opt/cmuphyscomp/src/Pd-wiringPi"
+    echo "It should be compiled in /opt/cmuphyscomp/src/Pd-wiringPi"
 fi
 
 ################################################################
