@@ -80,6 +80,7 @@ class pi_puppet::packages {
    "gstreamer1.0-alsa",
    "gstreamer1.0-plugins-base",
    "gstreamer1.0-plugins-good",
+   "gstreamer1.0-plugins-ugly",
    "1.0-omx"
    ]
 
