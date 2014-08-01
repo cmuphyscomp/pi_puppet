@@ -19,6 +19,7 @@ fi
 ################################################################
 # see http://openframeworks.cc/download/ 
 # see http://openframeworks.cc/setup/raspberrypi/
+# see http://openframeworks.cc/setup/raspberrypi/Raspberry-Pi-Getting-Started.html
 
 # the following can take a long time
 
@@ -30,6 +31,14 @@ then
     cd /opt
     mkdir openFrameworks
     tar vxfz /tmp/of_v0.8.3_linuxarmv6l_release.tar.gz -C openFrameworks --strip-components 1
+fi
+
+if [ ! -e "/opt/openFrameworks/.package-timestamp" ];
+then
+    echo "Installing package dependencies for openFrameworks.  This can take a while if the packages are not already installed."
+    cd /opt/openFrameworks/scripts/linux/debian_armv6l
+    ./install_dependencies.sh
+    touch /opt/openFrameworks/.package-timestamp
 fi
 
 
