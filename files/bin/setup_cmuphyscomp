@@ -89,8 +89,13 @@ fi
 ################################################################
 if [ ! -e "/opt/cmuphyscomp/src/Pd-wiringPi" ];
 then
-    echo "Note: rpi-gpio still needs to be manually installed from http://nyu-waverlylabs.org/rpi-gpio/"
-    echo "It should be compiled in /opt/cmuphyscomp/src/Pd-wiringPi"
+    echo "Note: downloading cached copy of Pd-wiringPi.  The original is from the following URL:"
+    echo "  http://nyu-waverlylabs.org/rpi-gpio/"
+    echo "The original cannot be easily downloaded directly from a constant URL, so it should be checked for a new version."
+    cd /tmp
+    wget http://www.cs.cmu.edu/~garthz/cmuphyscomp/files/Pd-wiringPi.tar
+    cd /opt/cmuphyscomp/src
+    tar xvf /tmp/Pd-wiringPi.tar
 fi
 
 ################################################################
