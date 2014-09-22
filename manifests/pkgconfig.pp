@@ -79,4 +79,12 @@ class pi_puppet::pkgconfig {
     owner  => root,
     group  => root,
   }
+
+  file { "/usr/local/lib/pd-externals/moocow":
+    ensure => 'link',
+    target => '/opt/cmuphyscomp/lib/pd-externals/moocow/',
+    owner  => root,
+    group  => root,
+  }
+
 }

@@ -81,7 +81,7 @@ class pi_puppet::packages {
    "gstreamer1.0-plugins-base",
    "gstreamer1.0-plugins-good",
    "gstreamer1.0-plugins-ugly",
-   "1.0-omx"
+   # "1.0-omx"
    ]
 
   # ================================================================
@@ -99,16 +99,16 @@ class pi_puppet::packages {
     content => 'deb http://vontaene.de/raspbian-updates/ . main',
   }
 
-  # N.B. gstreamer packages are unsigned, so the following just disables
-  # authentication.  This is a less than ideal solution.  A better solution
-  # would be to install the gstreamer gpg keys (if available), or find a way to
-  # selectively disable authentication from just this source.
-  file { "/etc/apt/apt.conf.d/99auth":
-    mode   => 0644,
-    owner  => 'root',
-    group  => 'root',
-    content => 'APT::Get::AllowUnauthenticated yes;',
-  }
+  # The gstreamer package key can be installed manually as follows:
+  #    gpg --recv-keys 0C667A3E ; gpg -a --export 0C667A3E | sudo apt-key add -
+  
+  # Prior to this the following was used to just disable authentication, a less than ideal solution.
+  # file { "/etc/apt/apt.conf.d/99auth":
+  #   mode   => 0644,
+  #   owner  => 'root',
+  #   group  => 'root',
+  #   content => 'APT::Get::AllowUnauthenticated yes;',
+  # }
 
   # ================================================================
   # make sure apt-get update runs once before any package installation
