@@ -38,19 +38,25 @@ then
     echo "Checking out and building Pd externals."
     cd /opt/cmuphyscomp/src
     svn checkout -N svn://svn.code.sf.net/p/pure-data/svn/trunk pd-svn
-    cd pd-svn
+    cd /opt/cmuphyscomp/src/pd-svn
     svn update -N externals
     svn update -N packages
     svn update -N pd
-    cd pd
+    cd /opt/cmuphyscomp/src/pd-svn/pd
     svn update -N src
-    cd ..
-    cd externals
-    svn up mrpeach
+
     cd /opt/cmuphyscomp/src/pd-svn/externals
+    svn update mrpeach
     make mrpeach
     mkdir /opt/cmuphyscomp/lib/pd-externals/mrpeach
     install -p mrpeach/*/*.pd_linux mrpeach/*/*.pd /opt/cmuphyscomp/lib/pd-externals/mrpeach
+
+    cd /opt/cmuphyscomp/src/pd-svn/externals
+    svn update moocow
+    make moocow
+    mkdir /opt/cmuphyscomp/lib/pd-externals/moocow
+    install -p moocow/*/src/*.pd_linux moocow/*/src/*.pd /opt/cmuphyscomp/lib/pd-externals/moocow
+
 fi
 
 ################################################################
