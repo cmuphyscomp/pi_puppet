@@ -115,3 +115,13 @@ then
     mv ml-0.15.1-alpha /opt/cmuphyscomp/lib/ml-lib
 fi
 ################################################################
+if [ ! -e "/opt/cmuphyscomp/src/pdpython" ];
+then
+    echo "Cloning pdpython from github, building, and installing."
+    cd /opt/cmuphyscomp/src
+    git clone https://github.com/garthz/pdpython.git
+    cd pdpython
+    make -f Makefile.Linux
+    mv install-Linux /opt/cmuphyscomp/lib/pd-externals/pdpython
+fi
+################################################################

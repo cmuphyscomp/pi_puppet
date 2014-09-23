@@ -80,9 +80,18 @@ class pi_puppet::pkgconfig {
     group  => root,
   }
 
+  # locally compiled Pure Data library, kept in the course package
   file { "/usr/local/lib/pd-externals/moocow":
     ensure => 'link',
     target => '/opt/cmuphyscomp/lib/pd-externals/moocow/',
+    owner  => root,
+    group  => root,
+  }
+
+  # locally compiled Pure Data library, kept in the course package
+  file { "/usr/local/lib/pd-externals/pdpython":
+    ensure => 'link',
+    target => '/opt/cmuphyscomp/lib/pd-externals/pdpython/',
     owner  => root,
     group  => root,
   }
