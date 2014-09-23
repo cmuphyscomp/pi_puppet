@@ -103,12 +103,12 @@ class pi_puppet::packages {
   #    gpg --recv-keys 0C667A3E ; gpg -a --export 0C667A3E | sudo apt-key add -
   
   # Prior to this the following was used to just disable authentication, a less than ideal solution.
-  # file { "/etc/apt/apt.conf.d/99auth":
-  #   mode   => 0644,
-  #   owner  => 'root',
-  #   group  => 'root',
-  #   content => 'APT::Get::AllowUnauthenticated yes;',
-  # }
+  file { "/etc/apt/apt.conf.d/99auth":
+    mode   => 0644,
+    owner  => 'root',
+    group  => 'root',
+    content => 'APT::Get::AllowUnauthenticated no;',
+  }
 
   # ================================================================
   # make sure apt-get update runs once before any package installation
