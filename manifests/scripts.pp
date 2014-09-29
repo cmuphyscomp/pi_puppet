@@ -34,4 +34,12 @@ class pi_puppet::scripts {
     source => "puppet:///modules/pi_puppet/bin/node-RED",
   }
 
+  file { "/usr/local/bin/pdroot":
+    ensure => present,
+    mode   => 0755,
+    owner  => root,
+    group  => root,
+    source => "puppet:///modules/pi_puppet/bin/pdroot",
+  }
+
 }

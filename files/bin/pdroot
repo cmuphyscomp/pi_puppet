@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# just run pd as root to make sure it has hardware access
+sudo pd $*
