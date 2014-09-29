@@ -18,6 +18,14 @@ class pi_puppet::pkgconfig {
     source => "puppet:///modules/pi_puppet/etc/default/locale",
   }
 
+  file { "/etc/modprobe.d/raspi-blacklist.conf":
+    ensure => present,
+    mode   => 0644,
+    owner  => 'root',
+    group  => 'root',
+    source => "puppet:///modules/pi_puppet/etc/modprobe.d/raspi-blacklist.conf",
+  }
+
   package { 'samba':
     ensure => present,
     before => [ File['/etc/samba/smb.conf'], File['/var/lib/samba/passdb.tdb'] ],
