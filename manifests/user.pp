@@ -126,5 +126,17 @@ class pi_puppet::user {
     owner  => pi,
     group  => pi,
   }
+  ################################################################
+  # Running pd or other graphical applications as root using sudo won't work
+  # using X11 over ssh unless root is provided with X11 credentials.  This
+  # creates a symbolic link so that root shares the same credentials as the
+  # default 'pi' user.
+  
+  file { "/root/.Xauthority":
+    ensure => 'link',
+    target => '/home/pi/.Xauthority',
+    owner  => root,
+    group  => root,
+  }
 
 }

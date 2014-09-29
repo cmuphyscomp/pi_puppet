@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Node-RED is a visual tool for programming on embedded devices.
+# TAfter running this
+# see http://nodered.org/
+
+cd /opt/cmuphyscomp/src/node-red/node-red-0.9.0
+
+# start the server in the background
+sudo node red.js &
+
+echo "Node-RED server started, it be be accessed as a web page at one of the following URLs:"
+echo "Using a browser *on* the Raspberry Pi:            http://127.0.0.1:1880"
+echo "Using a browser on a laptop connected to the Pi:  http://192.168.2.3:1880"
+echo "Or use whatever network address you normally use to access the Pi and port 1880."
+

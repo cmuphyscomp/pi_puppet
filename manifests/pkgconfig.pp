@@ -96,4 +96,12 @@ class pi_puppet::pkgconfig {
     group  => root,
   }
 
+  # locally compiled Pure Data library, kept in the course package
+  file { "/usr/local/lib/pd-externals/pdwiringPi":
+    ensure => 'link',
+    target => '/opt/cmuphyscomp/lib/pd-externals/pdwiringPi/',
+    owner  => root,
+    group  => root,
+  }
+
 }

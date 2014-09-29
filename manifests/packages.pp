@@ -18,6 +18,8 @@ class pi_puppet::packages {
    "python-scipy",
    "python-opencv",
    "python-pyode",
+   "python-pip",
+   "python-setuptools",
    "puppet",
    "puppet-el",
    "arduino",

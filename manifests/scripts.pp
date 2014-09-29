@@ -26,4 +26,12 @@ class pi_puppet::scripts {
     source => "puppet:///modules/pi_puppet/bin/setup_cmuphyscomp",
   }
 
+  file { "/usr/local/bin/node-RED":
+    ensure => present,
+    mode   => 0755,
+    owner  => root,
+    group  => root,
+    source => "puppet:///modules/pi_puppet/bin/node-RED",
+  }
+
 }
