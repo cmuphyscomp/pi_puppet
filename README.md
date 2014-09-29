@@ -30,10 +30,13 @@ References
   * http://puppetlabs.com/puppet/puppet-open-source
 
 
-Installation
-------------
+Basic Puppet Installation
+-------------------------
 
-This package can be installed on a stock Raspbian distribution as follows.
+This package can be installed on a stock Raspbian distribution as follows.  Note
+that the final image can be sized to a 4Gb card for distribution, but the
+intervening size may be larger unless performed incrementally, with apt-get
+clean used to remove downloaded packages in stages.  An 8Gb card is recommended.
 
 First, the network connection on the Raspberry Pi needs to manually configured
 to the point where the public internet is accessible.  A convenient option is to
@@ -67,3 +70,25 @@ After the initial configuration, full updates can be performed as follows:
 The pi_update script has additional options to run partial updates; to see all options, run:
    
     $ pi_update --help
+
+
+Full Courseware Installation
+----------------------------
+
+There are many packages for the Pi which need to be installed directly from
+sources, so there are other components which are distributed for the course as
+packages within /opt.  These are normally given to students as part of a full
+Raspbian filesystem image.  The configuration and installation of these packages
+may eventually move to pi_puppet, but for now these are maintained partly by
+hand.
+
+Two rather hairy and fragile scripts are installed by the pi_puppet package in
+/usr/local/bin to assist in rebuilding these trees from scratch.  These are
+likely to need adjustment, because they are rarely run and depend on many
+outside resources which may have changed in the interim:
+
+    setup_cmuphyscomp
+    setup_openframeworks
+
+These will likely only run on an 8Gb or larger filesystem.
+
