@@ -35,6 +35,15 @@ class pi_puppet::user {
   }
 
   ################################################################
+  # top-level link to course content
+  file { "/home/pi/physcomp-examples":
+    ensure => 'link',
+    target => '/opt/cmuphyscomp/physcomp-examples',
+    owner  => pi,
+    group  => pi,
+  }
+
+  
   # folder to hold Pure Data patches and externals
   file { "/home/pi/pd-externals":
     ensure => 'directory',
@@ -52,6 +61,7 @@ class pi_puppet::user {
   }
 
   # Pure Data examples provided with the course
+  # this are likely moot
   file { "/home/pi/pd-externals/demos":
     ensure => 'link',
     target => '/opt/cmuphyscomp/physcomp-examples/support/Pd-demos',
@@ -59,38 +69,12 @@ class pi_puppet::user {
     group  => pi,
   }
 
-  # Pure Data machine learning library provided with the course
-  file { "/home/pi/pd-externals/ml-lib":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/lib/ml-lib/Linux/armv6',
-    owner  => pi,
-    group  => pi,
-  }
-
+  # Pure Data reference documentation provided with the course
   file { "/home/pi/pd-externals/reference":
     ensure => 'link',
     target => '/opt/cmuphyscomp/physcomp-examples/reference',
     owner  => pi,
     group  => pi,
-  }
-
-  file { "/home/pi/pd-externals/wiringPi_gpio-help.pd":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/src/Pd-wiringPi/wiringPi_gpio/wiringPi_gpio-help.pd',
-    owner  => pi,
-    group  => pi,
-  }
-
-  file { "/home/pi/pd-externals/wiringPi_gpio.pd_linux":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/src/Pd-wiringPi/wiringPi_gpio/wiringPi_gpio.l_arm',
-    owner  => pi,
-    group  => pi,
-  }
-
-  # link now moot, this can be removed after all systems update
-  file { "/home/pi/pd-externals/doc":
-    ensure => 'absent',
   }
 
   ################################################################

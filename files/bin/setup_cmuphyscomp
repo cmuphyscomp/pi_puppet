@@ -33,33 +33,6 @@ then
 fi
 
 ################################################################
-if [ ! -e "/opt/cmuphyscomp/src/pd-svn" ];
-then
-    echo "Checking out and building Pd externals."
-    cd /opt/cmuphyscomp/src
-    svn checkout -N svn://svn.code.sf.net/p/pure-data/svn/trunk pd-svn
-    cd /opt/cmuphyscomp/src/pd-svn
-    svn update -N externals
-    svn update -N packages
-    svn update -N pd
-    cd /opt/cmuphyscomp/src/pd-svn/pd
-    svn update -N src
-
-    cd /opt/cmuphyscomp/src/pd-svn/externals
-    svn update mrpeach
-    make mrpeach
-    mkdir /opt/cmuphyscomp/lib/pd-externals/mrpeach
-    install -p mrpeach/*/*.pd_linux mrpeach/*/*.pd /opt/cmuphyscomp/lib/pd-externals/mrpeach
-
-    cd /opt/cmuphyscomp/src/pd-svn/externals
-    svn update moocow
-    make moocow
-    mkdir /opt/cmuphyscomp/lib/pd-externals/moocow
-    install -p moocow/*/src/*.pd_linux moocow/*/src/*.pd /opt/cmuphyscomp/lib/pd-externals/moocow
-
-fi
-
-################################################################
 if [ ! -e "/opt/cmuphyscomp/src/OSC" ];
 then
     echo "Cloning OSC libraries from github."
@@ -93,34 +66,52 @@ then
 fi
 
 ################################################################
-if [ ! -e "/opt/cmuphyscomp/src/pdwiringPi" ];
-then
-    echo "Cloning pdwiringPi from github, building, and installing."
-    cd /opt/cmuphyscomp/src
-    git clone https://github.com/garthz/pdwiringPi.git
-    cd pdwiringPi
-    make
-    mv pdwiringPi /opt/cmuphyscomp/lib/pd-externals/pdwiringPi
-fi
-################################################################
-if [ ! -e "/opt/cmuphyscomp/lib/ml-lib" ];
+if [ ! -e "/usr/local/lib/pd-externals/ml-lib" ];
 then
     cd /tmp
     wget https://github.com/cmuartfab/ml-lib/releases/download/0.15.1/ml-0.15.1-alpha.zip
     unzip ml-0.15.1-alpha.zip
 
     # Note: this drops the version number in favor of using a stable path name.
-    mv ml-0.15.1-alpha /opt/cmuphyscomp/lib/ml-lib
+    mv ml-0.15.1-alpha/Linux/armv6 /usr/local/lib/pd-externals/ml-lib
+fi
+
+################################################################
+if [ ! -e "/usr/local/lib/pd-externals/pdwiringPi" ];
+then
+    cd /opt/cmuphyscomp/src
+
+    if [ ! -e "pdwiringPi" ];
+    then
+	echo "Cloning pdwiringPi from github, building, and installing."
+	git clone https://github.com/garthz/pdwiringPi.git
+	cd pdwiringPi
+    else
+	echo "Updating pdwiringPi from github, building, and installing."
+	cd pdwiringPi
+	git pull
+    fi
+    make
+    mv pdwiringPi /usr/local/lib/pd-externals
 fi
 ################################################################
-if [ ! -e "/opt/cmuphyscomp/src/pdpython" ];
+if [ ! -e "/usr/local/lib/pd-externals/pdpython" ];
 then
-    echo "Cloning pdpython from github, building, and installing."
     cd /opt/cmuphyscomp/src
-    git clone https://github.com/garthz/pdpython.git
-    cd pdpython
+
+    if [ ! -e "pdpython" ];
+    then
+	echo "Cloning pdpython from github, building, and installing."
+	git clone https://github.com/garthz/pdpython.git
+	cd pdpython
+    else
+	echo "Updating pdpython from github, building, and installing."
+	cd pdpython
+	git pull
+    fi
+
     make -f Makefile.Linux
-    mv install-Linux /opt/cmuphyscomp/lib/pd-externals/pdpython
+    mv install-Linux /usr/local/lib/pd-externals/pdpython
 fi
 ################################################################
 if [ ! -e "/opt/cmuphyscomp/src/WiringPi2-Python" ];

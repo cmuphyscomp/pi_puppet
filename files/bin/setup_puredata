@@ -1,0 +1,127 @@
+#!/bin/bash
+
+# This is a rarely-used and fragile script to create from scratch the Pure Data
+# installation for the Raspberry Pi courseware image for the Intro to Physical
+# Computing course in IDeATe at Carnegie Mellon University.
+
+# This rebuilds /opt/puredata and /opt/pd-externals.  The process install files
+# into /usr/local/lib. /usr/local/lib should then be mirrored onto the
+# courseware filesystem.
+
+# The courseware includes several repository checkouts and a few local
+# compilations to allow the possibility of updating parts of it in place.
+
+# This script has minimal error-checking and should be run with caution.  It has
+# some limited capacity to selectively rebuild missing subtrees in order to
+# allow re-running after fixing an error.
+
+################################################################
+# Check whether we are root, in order to get correct permissions locally.
+if [ `whoami` != "root" ];
+then
+    echo "This must be run as root in order to create files with correct permissions."
+    exit 0;
+fi
+
+################################################################
+if [ ! -e "/opt/puredata" ];
+then
+    echo "Checking out and building Pd."
+    cd /opt
+
+    # just do a shallow clone to save time and space
+    git clone --depth 1 http://git.code.sf.net/p/pure-data/pure-data puredata
+    # that was only about 17M
+
+    cd puredata
+    ./autogen.sh
+    ./configure
+    make
+    make install
+fi
+
+################################################################
+if [ ! -e "/opt/pd-externals" ];
+then
+    echo "Checking out main structure of pd-svn repository in order to build specific Pd externals."
+    cd /opt
+    svn checkout -N svn://svn.code.sf.net/p/pure-data/svn/trunk pd-externals
+    cd /opt/pd-externals
+    svn update scripts
+    svn update -N externals
+    svn update -N abstractions
+    svn update -N packages
+    svn update -N pd
+    cd /opt/pd-externals/pd
+    svn update -N src
+fi
+
+################################################################
+if [ ! -e "/usr/local/lib/pd-externals/mrpeach" ];
+then
+    cd /opt/pd-externals/externals
+    svn update mrpeach
+    make mrpeach
+    make mrpeach_install
+    mv /opt/pd-externals/externals/build/lib/pd-extended/extra/mrpeach /usr/local/lib/pd-externals
+fi
+
+################################################################
+if [ ! -e "/usr/local/lib/pd-externals/moocow" ];
+then
+    cd /opt/pd-externals/externals
+    svn update moocow
+    make moocow
+    make moocow_install
+    mv /opt/pd-externals/externals/build/lib/pd-extended/extra/moocow /usr/local/lib/pd-externals
+fi
+
+################################################################
+if [ ! -e "/usr/local/lib/pd-externals/zexy" ];
+then
+    cd /opt/pd-externals/externals
+    svn update zexy
+    make zexy
+    make zexy_install
+    mv /opt/pd-externals/externals/build/lib/pd-extended/extra/zexy /usr/local/lib/pd-externals
+fi
+
+################################################################
+# hhttps://svn.code.sf.net/p/pure-data/svn/trunk/externals/iem/comport/comport
+if [ ! -e "/usr/local/lib/pd-externals/comport" ];
+    cd /opt/pd-externals/externals
+    svn update -N iem
+    cd iem
+    svn update -N comport
+    cd comport
+    svn update comport
+    make
+    make install
+fi
+
+################################################################
+# https://svn.code.sf.net/p/pure-data/svn/trunk/externals/miXed/cyclone/
+# not building properly, punting for now
+
+# if [ ! -e "/usr/local/lib/pd-externals/cyclone" ];
+#     cd /opt/pd-externals/externals
+#     svn update -N miXed
+#     cd miXed
+#     svn update cyclone
+#     cd cyclone
+#     make
+#     make install
+# fi
+
+################################################################
+if [ ! -e "/usr/local/lib/pd-externals/list-abs" ];
+then
+    cd /opt/pd-externals/abstractions
+    svn update -N footils
+    cd footils
+    svn update list-abs
+    cd list-abs
+    make install
+fi
+
+################################################################

@@ -10,6 +10,7 @@ class pi_puppet::pkgconfig {
     source => "puppet:///modules/pi_puppet/etc/motd",
   }
 
+  # this might require "dpkg-reconfigure locales" and enabling en_US.UTF-8
   file { "/etc/default/locale":
     ensure => present,
     mode   => 0644,
@@ -70,46 +71,4 @@ class pi_puppet::pkgconfig {
     owner  => root,
     group  => root,
   }
-
-  # global folder to hold course package materials in one place
-  # this is now created manually by the bootstrap_opt_cmuphyscomp script
-  # file { "/opt/cmuphyscomp":
-  #   ensure => 'directory',
-  #   mode   => 0755,
-  #   owner  => root,
-  #   group  => root,
-  # }
-
-  # locally compiled Pure Data library, kept in the course package
-  file { "/usr/local/lib/pd-externals/mrpeach":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/lib/pd-externals/mrpeach/',
-    owner  => root,
-    group  => root,
-  }
-
-  # locally compiled Pure Data library, kept in the course package
-  file { "/usr/local/lib/pd-externals/moocow":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/lib/pd-externals/moocow/',
-    owner  => root,
-    group  => root,
-  }
-
-  # locally compiled Pure Data library, kept in the course package
-  file { "/usr/local/lib/pd-externals/pdpython":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/lib/pd-externals/pdpython/',
-    owner  => root,
-    group  => root,
-  }
-
-  # locally compiled Pure Data library, kept in the course package
-  file { "/usr/local/lib/pd-externals/pdwiringPi":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/lib/pd-externals/pdwiringPi/',
-    owner  => root,
-    group  => root,
-  }
-
 }

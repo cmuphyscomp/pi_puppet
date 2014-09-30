@@ -18,6 +18,14 @@ class pi_puppet::scripts {
     source => "puppet:///modules/pi_puppet/bin/setup_openframeworks",
   }
 
+  file { "/usr/local/bin/setup_puredata":
+    ensure => present,
+    mode   => 0755,
+    owner  => root,
+    group  => root,
+    source => "puppet:///modules/pi_puppet/bin/setup_puredata",
+  }
+
   file { "/usr/local/bin/setup_cmuphyscomp":
     ensure => present,
     mode   => 0755,
