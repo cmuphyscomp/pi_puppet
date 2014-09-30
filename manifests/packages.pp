@@ -14,6 +14,7 @@ class pi_puppet::packages {
    "screen",
    "xrdp",
    "x11vnc",
+   "xterm",
    # "minicom", already in pkgconfig.pp
    "python-scipy",
    "python-opencv",
@@ -34,6 +35,7 @@ class pi_puppet::packages {
    "libtool",
    "ntpdate",
    # "samba", already in pkgconfig.pp
+   "dnsutils",
    "netatalk",
    "avahi-daemon",
    "tightvncserver",
