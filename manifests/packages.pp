@@ -68,7 +68,7 @@ class pi_puppet::packages {
    "libdrm-dev",
    "libglew-dev",
    "libopenal-dev",
-   "libsndfile-dev",
+   # "libsndfile-dev",
    "libfreeimage-dev",
    "libcairo2-dev",
    "libgtk2.0-dev",
