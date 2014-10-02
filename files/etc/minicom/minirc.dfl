@@ -1,6 +1,6 @@
 # Machine-generated file - use "minicom -s" to change parameters.
 # Note: this file is managed by puppet.
 pu port             /dev/ttyACM0
-pu baudrate         57600
+pu baudrate         115200
 pu minit            
 pu rtscts           No 
