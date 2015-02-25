@@ -89,6 +89,7 @@ fi
 ################################################################
 # hhttps://svn.code.sf.net/p/pure-data/svn/trunk/externals/iem/comport/comport
 if [ ! -e "/usr/local/lib/pd-externals/comport" ];
+then
     cd /opt/pd-externals/externals
     svn update -N iem
     cd iem
