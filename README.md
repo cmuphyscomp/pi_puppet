@@ -82,13 +82,14 @@ Raspbian filesystem image.  The configuration and installation of these packages
 may eventually move to pi_puppet, but for now these are maintained partly by
 hand.
 
-Two rather hairy and fragile scripts are installed by the pi_puppet package in
+Three rather hairy and fragile scripts are installed by the pi_puppet package in
 /usr/local/bin to assist in rebuilding these trees from scratch.  These are
 likely to need adjustment, because they are rarely run and depend on many
 outside resources which may have changed in the interim:
 
     setup_cmuphyscomp
     setup_openframeworks
+    setup_puredata
 
 These will likely only run on an 8Gb or larger filesystem.
 
