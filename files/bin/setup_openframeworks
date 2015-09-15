@@ -21,22 +21,42 @@ fi
 # see http://openframeworks.cc/setup/raspberrypi/
 # see http://openframeworks.cc/setup/raspberrypi/Raspberry-Pi-Getting-Started.html
 
+# Raspberry Pi 2 notes:
+# http://forum.openframeworks.cc/t/raspberry-pi-2-setup-guide/18690
+
 # the following can take a long time
 
 if [ ! -e "/opt/openFrameworks" ];
 then
-    echo "Fetching and unpacking openFrameworks for Raspberry Pi."
     cd /tmp
-    wget http://www.openframeworks.cc/versions/v0.8.3/of_v0.8.3_linuxarmv6l_release.tar.gz    
+
+    # Fall 2014:
+    # wget http://www.openframeworks.cc/versions/v0.8.3/of_v0.8.3_linuxarmv6l_release.tar.gz
+    
+    # Raspberry Pi B+:
+    # wget http://www.openframeworks.cc/versions/v0.8.4/of_v0.8.4_linuxarmv6l_release.tar.gz
+
+    # Raspberry Pi 2:
+    echo "Fetching and unpacking openFrameworks for Raspberry Pi 2."
+    wget http://www.openframeworks.cc/versions/v0.8.4/of_v0.8.4_linuxarmv7l_release.tar.gz
+    
     cd /opt
     mkdir openFrameworks
-    tar vxfz /tmp/of_v0.8.3_linuxarmv6l_release.tar.gz -C openFrameworks --strip-components 1
+    # tar vxfz /tmp/of_v0.8.3_linuxarmv6l_release.tar.gz -C openFrameworks --strip-components 1
+    tar vxfz /tmp/of_v0.8.4_linuxarmv7l_release.tar.gz -C openFrameworks --strip-components 1
+
+    # update the RPi2 Makefiles
+    curl https://raw.githubusercontent.com/openframeworks/openFrameworks/master/libs/openFrameworksCompiled/project/linuxarmv7l/config.linuxarmv7l.rpi2.mk -o openFrameworks/libs/openFrameworksCompiled/project/linuxarmv7l/config.linuxarmv7l.rpi2.mk
 fi
+
 
 if [ ! -e "/opt/openFrameworks/.package-timestamp" ];
 then
     echo "Installing package dependencies for openFrameworks.  This can take a while if the packages are not already installed."
-    cd /opt/openFrameworks/scripts/linux/debian_armv6l
+
+    # cd /opt/openFrameworks/scripts/linux/debian_armv6l
+    cd /opt/openFrameworks/scripts/linux/debian
+    
     ./install_dependencies.sh
     touch /opt/openFrameworks/.package-timestamp
 fi
@@ -45,7 +65,9 @@ fi
 if [ ! -e "/opt/openFrameworks/.build-timestamp" ];
 then
     echo "Compiling openFrameworks.  This can take an hour on the Raspberry Pi."
-    cd /opt/openFrameworks/scripts/linux/debian_armv6l
+    # cd /opt/openFrameworks/scripts/linux/debian_armv6l
+    cd /opt/openFrameworks/scripts/linux/debian
+    export MAKEFLAGS=-j4 PLATFORM_VARIANT=rpi2
     make Release -C /opt/openFrameworks/libs/openFrameworksCompiled/project
     touch /opt/openFrameworks/.build-timestamp
 fi

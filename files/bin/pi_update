@@ -57,7 +57,7 @@ if __name__ == "__main__":
         if os.path.isdir("/opt/cmuphyscomp/course-demos"):
             print "Warning: obsolete /opt/cmuphyscomp/course-demos still present, should be removed."
 
-        if os.path.isdir("/opt/cmuphyscomp/physcomp-examples"):
-            os.system('cd /opt/cmuphyscomp/physcomp-examples; git pull')
+        if os.path.isdir("/opt/cmuphyscomp/physcomp-f15"):
+            os.system('cd /opt/cmuphyscomp/physcomp-f15; git pull')
         else:
-            print "/opt/cmuphyscomp/physcomp-examples does not exist; is the courseware bootstrapped?"
+            print "/opt/cmuphyscomp/physcomp-f15 does not exist; is the courseware bootstrapped?"

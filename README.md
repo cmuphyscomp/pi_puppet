@@ -59,6 +59,10 @@ Clone this package from github into a new folder:
     $ cd /etc/puppet/modules
     $ sudo git clone https://github.com/cmuphyscomp/pi_puppet
 
+For the Raspberry Pi 2, use the raspi2 development branch:
+
+    $ sudo git clone --branch raspi2  https://github.com/cmuphyscomp/pi_puppet
+
 Run the update script once in-place for initial configuration:
 
     $ sudo python /etc/puppet/modules/pi_puppet/files/bin/pi_update
@@ -68,7 +72,7 @@ After the initial configuration, full updates can be performed as follows:
     $ sudo pi_update
 
 The pi_update script has additional options to run partial updates; to see all options, run:
-   
+
     $ pi_update --help
 
 
@@ -88,8 +92,7 @@ likely to need adjustment, because they are rarely run and depend on many
 outside resources which may have changed in the interim:
 
     setup_cmuphyscomp
-    setup_openframeworks
-    setup_puredata
+    setup_openframeworks  (not currently supported for RPi2)
+    setup_puredata        (not currently supported for RPi2)
 
 These will likely only run on an 8Gb or larger filesystem.
-

@@ -80,36 +80,37 @@ class pi_puppet::user {
   ################################################################
   # Setup for the default Raspbian 1.0.1 Arduino IDE (which doesn't support the Due).
 
-  # folders to hold Arduino sketches and libraries
-  file { "/home/pi/sketchbook":
-    ensure => 'directory',
-    mode   => 0755,
-    owner  => pi,
-    group  => pi,
-  }
+  # # folders to hold Arduino sketches and libraries
+  # file { "/home/pi/sketchbook":
+  #   ensure => 'directory',
+  #   mode   => 0755,
+  #   owner  => pi,
+  #   group  => pi,
+  # }
 
-  file { "/home/pi/sketchbook/libraries":
-    ensure => 'directory',
-    mode   => 0755,
-    owner  => pi,
-    group  => pi,
-  }
+  # file { "/home/pi/sketchbook/libraries":
+  #   ensure => 'directory',
+  #   mode   => 0755,
+  #   owner  => pi,
+  #   group  => pi,
+  # }
 
-  # Arduino sketches provided with the course
-  file { "/home/pi/sketchbook/cmuphyscomp":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/physcomp-examples/support/Arduino/',
-    owner  => pi,
-    group  => pi,
-  }
+  # # Arduino sketches provided with the course
+  # file { "/home/pi/sketchbook/cmuphyscomp":
+  #   ensure => 'link',
+  #   target => '/opt/cmuphyscomp/physcomp-examples/support/Arduino/',
+  #   owner  => pi,
+  #   group  => pi,
+  # }
 
-  # Arduino libraries provided with the course
-  file { "/home/pi/sketchbook/libraries/OSC":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/src/OSC',
-    owner  => pi,
-    group  => pi,
-  }
+  # # Arduino libraries provided with the course
+  # file { "/home/pi/sketchbook/libraries/OSC":
+  #   ensure => 'link',
+  #   target => '/opt/cmuphyscomp/src/OSC',
+  #   owner  => pi,
+  #   group  => pi,
+  # }
+  
   ################################################################
   # Running pd or other graphical applications as root using sudo won't work
   # using X11 over ssh unless root is provided with X11 credentials.  This

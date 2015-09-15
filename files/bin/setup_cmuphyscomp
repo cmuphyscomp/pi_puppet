@@ -33,12 +33,13 @@ then
 fi
 
 ################################################################
-if [ ! -e "/opt/cmuphyscomp/src/OSC" ];
-then
-    echo "Cloning OSC libraries from github."
-    cd /opt/cmuphyscomp/src
-    git clone https://github.com/CNMAT/OSC
-fi
+# Arduino OSC Library.
+# if [ ! -e "/opt/cmuphyscomp/src/OSC" ];
+# then
+#     echo "Cloning OSC libraries from github."
+#     cd /opt/cmuphyscomp/src
+#     git clone https://github.com/CNMAT/OSC
+# fi
 
 ################################################################
 if [ -e "/opt/cmuphyscomp/course-demos" ];
@@ -47,11 +48,17 @@ then
 fi
 
 ################################################################
-if [ ! -e "/opt/cmuphyscomp/physcomp-examples" ];
+if [ -e "/opt/cmuphyscomp/physcomp-examples" ];
+then
+    echo "Warning: obsolete /opt/cmuphyscomp/physcomp-examples folder found, this should be removed."
+fi
+
+################################################################
+if [ ! -e "/opt/cmuphyscomp/physcomp-f15" ];
 then
     echo "Cloning course materials from github."
     cd /opt/cmuphyscomp
-    git clone https://github.com/cmuphyscomp/physcomp-examples.git
+    git clone https://github.com/cmuphyscomp/physcomp-f15.git
 fi
 
 ################################################################
@@ -66,54 +73,6 @@ then
 fi
 
 ################################################################
-if [ ! -e "/usr/local/lib/pd-externals/ml-lib" ];
-then
-    cd /tmp
-    wget https://github.com/cmuartfab/ml-lib/releases/download/0.15.1/ml-0.15.1-alpha.zip
-    unzip ml-0.15.1-alpha.zip
-
-    # Note: this drops the version number in favor of using a stable path name.
-    mv ml-0.15.1-alpha/Linux/armv6 /usr/local/lib/pd-externals/ml-lib
-fi
-
-################################################################
-if [ ! -e "/usr/local/lib/pd-externals/pdwiringPi" ];
-then
-    cd /opt/cmuphyscomp/src
-
-    if [ ! -e "pdwiringPi" ];
-    then
-	echo "Cloning pdwiringPi from github, building, and installing."
-	git clone https://github.com/garthz/pdwiringPi.git
-	cd pdwiringPi
-    else
-	echo "Updating pdwiringPi from github, building, and installing."
-	cd pdwiringPi
-	git pull
-    fi
-    make
-    mv pdwiringPi /usr/local/lib/pd-externals
-fi
-################################################################
-if [ ! -e "/usr/local/lib/pd-externals/pdpython" ];
-then
-    cd /opt/cmuphyscomp/src
-
-    if [ ! -e "pdpython" ];
-    then
-	echo "Cloning pdpython from github, building, and installing."
-	git clone https://github.com/garthz/pdpython.git
-	cd pdpython
-    else
-	echo "Updating pdpython from github, building, and installing."
-	cd pdpython
-	git pull
-    fi
-
-    make -f Makefile.Linux
-    mv install-Linux /usr/local/lib/pd-externals/pdpython
-fi
-################################################################
 if [ ! -e "/opt/cmuphyscomp/src/WiringPi2-Python" ];
 then
     echo "Cloning WiringPi2-python from github, building, and installing."
@@ -123,25 +82,80 @@ then
     python setup.py install
     # this installed /usr/local/lib/python2.7/dist-packages/wiringpi2-1.0.10-py2.7-linux-armv6l.egg
 fi
+
 ################################################################
+# machine learning library for Pd
+# if [ ! -e "/usr/local/lib/pd-externals/ml-lib" ];
+# then
+#     cd /tmp
+#     wget https://github.com/cmuartfab/ml-lib/releases/download/0.15.1/ml-0.15.1-alpha.zip
+#     unzip ml-0.15.1-alpha.zip
+
+#     # Note: this drops the version number in favor of using a stable path name.
+#     mv ml-0.15.1-alpha/Linux/armv6 /usr/local/lib/pd-externals/ml-lib
+# fi
+
+################################################################
+# hardware interface library for Pd
+# if [ ! -e "/usr/local/lib/pd-externals/pdwiringPi" ];
+# then
+#     cd /opt/cmuphyscomp/src
+
+#     if [ ! -e "pdwiringPi" ];
+#     then
+# 	echo "Cloning pdwiringPi from github, building, and installing."
+# 	git clone https://github.com/garthz/pdwiringPi.git
+# 	cd pdwiringPi
+#     else
+# 	echo "Updating pdwiringPi from github, building, and installing."
+# 	cd pdwiringPi
+# 	git pull
+#     fi
+#     make
+#     mv pdwiringPi /usr/local/lib/pd-externals
+# fi
+
+################################################################
+# Python interface library for Pd
+# if [ ! -e "/usr/local/lib/pd-externals/pdpython" ];
+# then
+#     cd /opt/cmuphyscomp/src
+
+#     if [ ! -e "pdpython" ];
+#     then
+# 	echo "Cloning pdpython from github, building, and installing."
+# 	git clone https://github.com/garthz/pdpython.git
+# 	cd pdpython
+#     else
+# 	echo "Updating pdpython from github, building, and installing."
+# 	cd pdpython
+# 	git pull
+#     fi
+
+#     make -f Makefile.Linux
+#     mv install-Linux /usr/local/lib/pd-externals/pdpython
+# fi
+
+################################################################
+# Node-RED Javascript IDE.
 # for details, see http://nodered.org/docs/hardware/raspberrypi.html
-if [ ! -e "/opt/cmuphyscomp/src/node-red" ];
-then
-    mkdir /opt/cmuphyscomp/src/node-red
-    cd /opt/cmuphyscomp/src/node-red
-    wget http://node-arm.herokuapp.com/node_latest_armhf.deb
-    dpkg -i node_latest_armhf.deb
-    echo "Installing node.js directly from Debian package; this won't be updated by puppet."
+# if [ ! -e "/opt/cmuphyscomp/src/node-red" ];
+# then
+#     mkdir /opt/cmuphyscomp/src/node-red
+#     cd /opt/cmuphyscomp/src/node-red
+#     wget http://node-arm.herokuapp.com/node_latest_armhf.deb
+#     dpkg -i node_latest_armhf.deb
+#     echo "Installing node.js directly from Debian package; this won't be updated by puppet."
 
-    # see http://nodered.org/
-    wget https://github.com/node-red/node-red/archive/0.9.0.zip
-    unzip -q 0.9.0.zip
-    cd node-red-0.9.0
-    npm install --production
-    echo "Node-RED installed.  You can start it as follows:"
-    echo "cd /opt/cmuphyscomp/src/node-red/node-red-0.9.0;  sudo node red.js"
+#     # see http://nodered.org/
+#     wget https://github.com/node-red/node-red/archive/0.9.0.zip
+#     unzip -q 0.9.0.zip
+#     cd node-red-0.9.0
+#     npm install --production
+#     echo "Node-RED installed.  You can start it as follows:"
+#     echo "cd /opt/cmuphyscomp/src/node-red/node-red-0.9.0;  sudo node red.js"
     
-    # for details: http://nodered.org/docs/getting-started/running.html
+#     # for details: http://nodered.org/docs/getting-started/running.html
 
-fi
+# fi
 ################################################################
