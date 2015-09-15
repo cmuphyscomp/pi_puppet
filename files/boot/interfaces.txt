@@ -12,9 +12,9 @@ iface lo inet loopback
 
 # wired ethernet configuration for a static IP address.
 iface eth0 inet static
-   address 192.168.1.7
+   address 192.168.2.3
    netmask 255.255.255.0
-   gateway 192.168.1.1
+   gateway 192.168.2.1
    dns-nameservers 128.2.1.10
    dns-search local
 
