@@ -164,11 +164,12 @@ class pi_puppet::packages {
 
   # ================================================================
   # make sure all required packages are installed
-  # package { $course_packages:
-  #   ensure => "installed",
-  #   # ensure => "latest",
+  package { $course_packages:
+    ensure => "installed",
+    # ensure => "latest",
+  }
+  # special dependencies for older openFrameworks
   #   require => [File['/etc/apt/sources.list.d/gstreamer.list'], File['/etc/apt/apt.conf.d/99auth']],
-  # }
 
   #  package { $remove_packages:
   #    ensure => "purged",
