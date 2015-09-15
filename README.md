@@ -54,13 +54,15 @@ Make sure that puppet is installed:
     $ sudo apt-get upgrade
     $ sudo apt-get install puppet
 
-Clone this package from github into a new folder:
+Clone this package from github into a new folder.  For a Raspberry Pi B+, use
+the default master branch:
 
     $ cd /etc/puppet/modules
     $ sudo git clone https://github.com/cmuphyscomp/pi_puppet
 
 For the Raspberry Pi 2, use the raspi2 development branch:
 
+    $ cd /etc/puppet/modules
     $ sudo git clone --branch raspi2  https://github.com/cmuphyscomp/pi_puppet
 
 Run the update script once in-place for initial configuration:
