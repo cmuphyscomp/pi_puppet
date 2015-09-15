@@ -15,20 +15,20 @@ class pi_puppet::packages {
    "xrdp",
    "x11vnc",
    "xterm",
-   # "minicom", already in pkgconfig.pp
-   
-   "python-scipy",
-   "python-opencv",
-   "python-pyode",
-   "python-pip",
-   "python-setuptools",
-   
    "imagemagick",
-   "puppet",
-   "puppet-el",
 
-   # "arduino",
-   
+   # "minicom", already in pkgconfig.pp
+
+   "python-opencv",
+   "python-pip",
+   "python-pyode",
+   "python-scipy",
+   "python-setuptools",
+   "python-sklearn",
+   "python-txosc",
+
+   # "arduino",  # hopelessly of out date
+
    # we are shifting to using a directly compiled Pure Data installation since Debian is quite out of date
    # "puredata",
    # "pd-comport",
@@ -36,24 +36,24 @@ class pi_puppet::packages {
    # "pd-cyclone",
    # "pd-list-abs",
    # "pd-osc",
-   
+
    "libtool",
    "ntpdate",
 
    # "samba", already in pkgconfig.pp
+   "puppet",
+   "puppet-el",
    "dnsutils",
    "netatalk",
    "avahi-daemon",
    "tightvncserver",
 
-   "python-txosc",
-   
    # "python-liblo",
    # "liblo-dev",
    # "pyliblo-utils",
 
    # openFrameworks does not compile cleanly on the Raspberry Pi 2 yet, so this is taken out for the moment.
-   
+
    # The following are required for openFrameworks.  For details, see
    # /opt/cmuphyscomp/src/openFrameworks/scripts/linux/debian_armv6l/install_dependencies.sh
    # or for the RPi 2:
@@ -146,7 +146,7 @@ class pi_puppet::packages {
 
   # The gstreamer package key can be installed manually as follows:
   #    gpg --recv-keys 0C667A3E ; gpg -a --export 0C667A3E | sudo apt-key add -
-  
+
   # Prior to this the following was used to just disable authentication, a less than ideal solution.
   # file { "/etc/apt/apt.conf.d/99auth":
   #   mode   => 0644,
@@ -167,7 +167,7 @@ class pi_puppet::packages {
   # package { $course_packages:
   #   ensure => "installed",
   #   # ensure => "latest",
-  #   require => [File['/etc/apt/sources.list.d/gstreamer.list'], File['/etc/apt/apt.conf.d/99auth']], 
+  #   require => [File['/etc/apt/sources.list.d/gstreamer.list'], File['/etc/apt/apt.conf.d/99auth']],
   # }
 
   #  package { $remove_packages:
