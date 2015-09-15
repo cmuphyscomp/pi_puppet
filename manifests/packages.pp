@@ -20,14 +20,14 @@ class pi_puppet::packages {
    # "minicom", already in pkgconfig.pp
 
    "python-opencv",
-   "python-pip",
    "python-pyode",
    "python-scipy",
    "python-setuptools",
    "python-sklearn",
    "python-txosc",
 
-   # "arduino",  # hopelessly of out date
+   # "python-pip",  # hopelessly out of date
+   # "arduino",     # hopelessly out of date
 
    # we are shifting to using a directly compiled Pure Data installation since Debian is quite out of date
    # "puredata",
