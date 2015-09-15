@@ -77,6 +77,11 @@ The pi_update script has additional options to run partial updates; to see all o
 
     $ pi_update --help
 
+Students will generally want to run raspi-config to expand the filesystem to
+fill their own microSD card and optionally enable camera support.
+
+	$ sudo raspi-config
+
 
 Full Courseware Installation
 ----------------------------
