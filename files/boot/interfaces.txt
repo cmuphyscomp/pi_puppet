@@ -15,13 +15,14 @@ iface lo inet loopback
 # Wired Ethernet configuration for a static IP address.  This assumes the
 # Raspberry Pi is attached to a laptop serving as a NAT bridge to the larger
 # network.  The specific gateway and host LAN addresses are chosen on
-# 192.168.2.x for compatibility with OS X Internet Sharing.  The DNS nameservers
-# are specific to Carnegee Mellon University.  These values must be changed if
-# the Raspberry Pi is used directly on the campus network.
+# 192.168.2.0/24 for compatibility with OS X Internet Sharing.  The netmask is
+# chosen permissively to work across 192.168.0.0/16 as a private network.  The
+# DNS nameservers are specific to Carnegie Mellon University.  These values must
+# be changed if the Raspberry Pi is used directly on the campus network.
 
 iface eth0 inet static
    address 192.168.2.3
-   netmask 255.255.255.0
+   netmask 255.255.0.0
    gateway 192.168.2.1
    dns-nameservers 128.2.1.10 128.2.1.11
    dns-search local
