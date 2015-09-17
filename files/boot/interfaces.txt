@@ -1,21 +1,29 @@
 # /boot/interfaces.txt
-# symbolically linked from /etc/networks/interfaces -> /boot/interfaces.txt
-
-# this controls the network configuration under Linux on the Raspberry Pi 2
+# This file controls the network configuration for Linux on a Raspberry Pi.
+#
+# This file is symbolically linked from /etc/network/interfaces -> /boot/interfaces.txt
+# so it can be edited offline.  The /boot partition is FAT32 and writable by OS X
+# and Windows.
 
 auto lo
 
 iface lo inet loopback
 
-# original wired ethernet configuration based on DHCP
+# Original Raspbian Ethernet configuration based on DHCP:
 # iface eth0 inet dhcp
 
-# wired ethernet configuration for a static IP address.
+# Wired Ethernet configuration for a static IP address.  This assumes the
+# Raspberry Pi is attached to a laptop serving as a NAT bridge to the larger
+# network.  The specific gateway and host LAN addresses are chosen on
+# 192.168.2.x for compatibility with OS X Internet Sharing.  The DNS nameservers
+# are specific to Carnegee Mellon University.  These values must be changed if
+# the Raspberry Pi is used directly on the campus network.
+
 iface eth0 inet static
    address 192.168.2.3
    netmask 255.255.255.0
    gateway 192.168.2.1
-   dns-nameservers 128.2.1.10
+   dns-nameservers 128.2.1.10 128.2.1.11
    dns-search local
 
 allow-hotplug wlan0
