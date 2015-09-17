@@ -5,14 +5,13 @@ This package contains administration configuration scripts for the Raspberry Pi
 microcontroller systems for the Physical Computing Lab in the IDeATe program at
 Carnegie Mellon University.
 
-We are using the Raspberry Pi as a Linux platform for the Fall 2014 iteration of
-Introduction to Physical Computing, running the Raspbian distribution. The
-scripts in this package use the 'puppet' administration system to customize the
-stock configuration for use on the Carnegie Mellon campus and with the course
+We are using the Raspberry Pi as a Linux platform running an enhanced Raspbian
+distribution for several courses related to physical computing courses.  scripts
+in this package use the 'puppet' administration system to customize the stock
+configuration for use on the Carnegie Mellon campus and with the course
 curriculum.
 
-This package is cloned into the following path:
-/etc/puppet/modules/pi_puppet
+This package is cloned into the following path: /etc/puppet/modules/pi_puppet
 
 Once installed, this package provides scripts for a student to initiate a
 software update.  During the update, this package is updated from github and
@@ -60,7 +59,7 @@ the default master branch:
     $ cd /etc/puppet/modules
     $ sudo git clone https://github.com/cmuphyscomp/pi_puppet
 
-For the Raspberry Pi 2, use the raspi2 development branch:
+For the Raspberry Pi 2, use the raspi2 branch:
 
     $ cd /etc/puppet/modules
     $ sudo git clone --branch raspi2  https://github.com/cmuphyscomp/pi_puppet
@@ -82,7 +81,6 @@ fill their own microSD card and optionally enable camera support.
 
 	$ sudo raspi-config
 
-
 Full Courseware Installation
 ----------------------------
 
@@ -93,13 +91,19 @@ Raspbian filesystem image.  The configuration and installation of these packages
 may eventually move to pi_puppet, but for now these are maintained partly by
 hand.
 
-Three rather hairy and fragile scripts are installed by the pi_puppet package in
+Several hairy and fragile scripts are installed by the pi_puppet package in
 /usr/local/bin to assist in rebuilding these trees from scratch.  These are
 likely to need adjustment, because they are rarely run and depend on many
 outside resources which may have changed in the interim:
 
     setup_cmuphyscomp
-    setup_openframeworks  (not currently supported for RPi2)
-    setup_puredata        (not currently supported for RPi2)
+    setup_puredata
+
+The openFrameworks build process includes its own dependency installation so it
+cannot be as easily included in the image.  However, the following script is
+provided to assist with downloading and compiling an openFrameworks system in
+/opt/openFrameworks:
+
+    setup_openframeworks  (still being tested for RPi2)
 
 These will likely only run on an 8Gb or larger filesystem.
