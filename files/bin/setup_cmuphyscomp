@@ -62,15 +62,16 @@ then
 fi
 
 ################################################################
-if [ ! -e "/opt/cmuphyscomp/src/wiringPi" ];
-then
-    echo "Cloning wiringPi from git.drogon.net, building, and installing."
-    cd /opt/cmuphyscomp/src
-    git clone git://git.drogon.net/wiringPi
-    cd wiringPi
-    ./build
-    echo "Note: wiringPi installs files into /usr/local"
-fi
+# This is now available as a Debian package.
+# if [ ! -e "/opt/cmuphyscomp/src/wiringPi" ];
+# then
+#     echo "Cloning wiringPi from git.drogon.net, building, and installing."
+#     cd /opt/cmuphyscomp/src
+#     git clone git://git.drogon.net/wiringPi
+#     cd wiringPi
+#     ./build
+#     echo "Note: wiringPi installs files into /usr/local"
+# fi
 
 ################################################################
 if [ ! -e "/opt/cmuphyscomp/src/WiringPi2-Python" ];
@@ -80,7 +81,9 @@ then
     git clone https://github.com/Gadgetoid/WiringPi2-Python.git
     cd WiringPi2-Python
     python setup.py install
-    # this installed /usr/local/lib/python2.7/dist-packages/wiringpi2-1.0.10-py2.7-linux-armv6l.egg
+    # this installed one of the following, depending on platform version:
+    #  /usr/local/lib/python2.7/dist-packages/wiringpi2-1.0.10-py2.7-linux-armv6l.egg
+    #  /usr/local/lib/python2.7/dist-packages/wiringpi2-1.1.1-py2.7-linux-armv7l.egg
 fi
 
 ################################################################
