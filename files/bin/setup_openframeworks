@@ -30,34 +30,45 @@ if [ ! -e "/opt/openFrameworks" ];
 then
     cd /tmp
 
-    # Fall 2014:
-    # wget http://www.openframeworks.cc/versions/v0.8.3/of_v0.8.3_linuxarmv6l_release.tar.gz
-    
-    # Raspberry Pi B+:
-    # wget http://www.openframeworks.cc/versions/v0.8.4/of_v0.8.4_linuxarmv6l_release.tar.gz
+    if [ "`uname -m`" = "armv7l" ];                                                                                         
+    then                                                                                                                    
+	echo "Building for Raspberry Pi 2"
+	echo "Fetching and unpacking openFrameworks for Raspberry Pi 2 with armv7l."
+	wget http://www.openframeworks.cc/versions/v0.8.4/of_v0.8.4_linuxarmv7l_release.tar.gz
+	cd /opt
+	mkdir openFrameworks
+	tar vxfz /tmp/of_v0.8.4_linuxarmv7l_release.tar.gz -C openFrameworks --strip-components 1
 
-    # Raspberry Pi 2:
-    echo "Fetching and unpacking openFrameworks for Raspberry Pi 2."
-    wget http://www.openframeworks.cc/versions/v0.8.4/of_v0.8.4_linuxarmv7l_release.tar.gz
-    
-    cd /opt
-    mkdir openFrameworks
-    # tar vxfz /tmp/of_v0.8.3_linuxarmv6l_release.tar.gz -C openFrameworks --strip-components 1
-    tar vxfz /tmp/of_v0.8.4_linuxarmv7l_release.tar.gz -C openFrameworks --strip-components 1
+	# update the RPi2 Makefiles
+	curl https://raw.githubusercontent.com/openframeworks/openFrameworks/master/libs/openFrameworksCompiled/project/linuxarmv7l/config.linuxarmv7l.rpi2.mk -o openFrameworks/libs/openFrameworksCompiled/project/linuxarmv7l/config.linuxarmv7l.rpi2.mk
 
-    # update the RPi2 Makefiles
-    curl https://raw.githubusercontent.com/openframeworks/openFrameworks/master/libs/openFrameworksCompiled/project/linuxarmv7l/config.linuxarmv7l.rpi2.mk -o openFrameworks/libs/openFrameworksCompiled/project/linuxarmv7l/config.linuxarmv7l.rpi2.mk
+    else
+	echo "Building for Raspberry Pi B+"
+	echo "Fetching and unpacking openFrameworks for Raspberry Pi with armv6l."
+
+	# Fall 2014: wget http://www.openframeworks.cc/versions/v0.8.3/of_v0.8.3_linuxarmv6l_release.tar.gz
+	wget http://www.openframeworks.cc/versions/v0.8.4/of_v0.8.4_linuxarmv6l_release.tar.gz
+	cd /opt
+	mkdir openFrameworks
+	tar vxfz /tmp/of_v0.8.4_linuxarmv6l_release.tar.gz -C openFrameworks --strip-components 1
+    fi      
 fi
-
 
 if [ ! -e "/opt/openFrameworks/.package-timestamp" ];
 then
     echo "Installing package dependencies for openFrameworks.  This can take a while if the packages are not already installed."
 
-    # cd /opt/openFrameworks/scripts/linux/debian_armv6l
-    cd /opt/openFrameworks/scripts/linux/debian
-    
-    ./install_dependencies.sh
+    if [ "`uname -m`" = "armv7l" ];
+    then
+	echo "Installing dependencies for Raspberry Pi 2"
+	cd /opt/openFrameworks/scripts/linux/debian
+	./install_dependencies.sh
+	
+    else
+	echo "Installing dependencies for Raspberry Pi B+"
+	cd /opt/openFrameworks/scripts/linux/debian_armv6l
+	./install_dependencies.sh
+    fi
     touch /opt/openFrameworks/.package-timestamp
 fi
 
@@ -65,10 +76,18 @@ fi
 if [ ! -e "/opt/openFrameworks/.build-timestamp" ];
 then
     echo "Compiling openFrameworks.  This can take an hour on the Raspberry Pi."
-    # cd /opt/openFrameworks/scripts/linux/debian_armv6l
-    cd /opt/openFrameworks/scripts/linux/debian
-    export MAKEFLAGS=-j4 PLATFORM_VARIANT=rpi2
-    make Release -C /opt/openFrameworks/libs/openFrameworksCompiled/project
+    if [ "`uname -m`" = "armv7l" ];
+    then
+	echo "Compiling for Raspberry Pi 2"
+	cd /opt/openFrameworks/scripts/linux/debian
+	export MAKEFLAGS=-j4 PLATFORM_VARIANT=rpi2
+	make Release -C /opt/openFrameworks/libs/openFrameworksCompiled/project
+    else
+	echo "Compiling for Raspberry Pi"
+	cd /opt/openFrameworks/scripts/linux/debian_armv6l
+	make Release -C /opt/openFrameworks/libs/openFrameworksCompiled/project
+    fi
+
     touch /opt/openFrameworks/.build-timestamp
 fi
 
