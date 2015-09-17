@@ -36,46 +36,46 @@ class pi_puppet::user {
 
   ################################################################
   # top-level link to course content
-  file { "/home/pi/physcomp-examples":
+  file { "/home/pi/physcomp-f15":
     ensure => 'link',
-    target => '/opt/cmuphyscomp/physcomp-examples',
+    target => '/opt/cmuphyscomp/physcomp-f15',
     owner  => pi,
     group  => pi,
   }
 
   
   # folder to hold Pure Data patches and externals
-  file { "/home/pi/pd-externals":
-    ensure => 'directory',
-    mode   => 0755,
-    owner  => pi,
-    group  => pi,
-  }
+  # file { "/home/pi/pd-externals":
+  #   ensure => 'directory',
+  #   mode   => 0755,
+  #   owner  => pi,
+  #   group  => pi,
+  # }
 
-  # Pure Data library provided with the course
-  file { "/home/pi/pd-externals/physcomp":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/physcomp-examples/support/Pd-library/physcomp',
-    owner  => pi,
-    group  => pi,
-  }
+  # # Pure Data library provided with the course
+  # file { "/home/pi/pd-externals/physcomp":
+  #   ensure => 'link',
+  #   target => '/opt/cmuphyscomp/physcomp-f15/support/Pd-library/physcomp',
+  #   owner  => pi,
+  #   group  => pi,
+  # }
 
-  # Pure Data examples provided with the course
-  # this are likely moot
-  file { "/home/pi/pd-externals/demos":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/physcomp-examples/support/Pd-demos',
-    owner  => pi,
-    group  => pi,
-  }
+  # # Pure Data examples provided with the course
+  # # this are likely moot
+  # file { "/home/pi/pd-externals/demos":
+  #   ensure => 'link',
+  #   target => '/opt/cmuphyscomp/physcomp-f15/support/Pd-demos',
+  #   owner  => pi,
+  #   group  => pi,
+  # }
 
-  # Pure Data reference documentation provided with the course
-  file { "/home/pi/pd-externals/reference":
-    ensure => 'link',
-    target => '/opt/cmuphyscomp/physcomp-examples/reference',
-    owner  => pi,
-    group  => pi,
-  }
+  # # Pure Data reference documentation provided with the course
+  # file { "/home/pi/pd-externals/reference":
+  #   ensure => 'link',
+  #   target => '/opt/cmuphyscomp/physcomp-f15/reference',
+  #   owner  => pi,
+  #   group  => pi,
+  # }
 
   ################################################################
   # Setup for the default Raspbian 1.0.1 Arduino IDE (which doesn't support the Due).
@@ -98,7 +98,7 @@ class pi_puppet::user {
   # # Arduino sketches provided with the course
   # file { "/home/pi/sketchbook/cmuphyscomp":
   #   ensure => 'link',
-  #   target => '/opt/cmuphyscomp/physcomp-examples/support/Arduino/',
+  #   target => '/opt/cmuphyscomp/physcomp-f15/support/Arduino/',
   #   owner  => pi,
   #   group  => pi,
   # }
